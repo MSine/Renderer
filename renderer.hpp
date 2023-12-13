@@ -32,26 +32,31 @@ class Ray;
 
 typedef struct {
     sf::Color color = sf::Color(180, 255, 255);
-    double opacity =  1;        //How much reflection vs refraction, 1 full reflection, 0 full refraction
-    double notAbsorbed = 1;   //How much energy will be retained
+    float opacity =  1;        //How much reflection vs refraction, 1 full reflection, 0 full refraction
+    float notAbsorbed = 1;   //How much energy will be retained
     bool specular = true;      //Mirror like clean reflection
-    double refIndex = 1;        //Refraction index
-    double brightness = 0;      //How much light the surface produces
+    float refIndex = 1;        //Refraction index
+    float brightness = 0;      //How much light the surface produces
 } Surface;
+
+typedef struct {
+    sf::Color color = sf::Color(255, 255, 255);
+    float brightness = 0;
+} RayCasted;
 
 
 class Vec3D {
     public:
         union {
             struct {
-                double x, y, z;
+                float x, y, z;
             };
-            double pos[3];
+            float pos[3];
         };
         Vec3D();
-        Vec3D(double setPos);
-        Vec3D(double setPos[3]);
-        Vec3D(double x, double y, double z);
+        Vec3D(float setPos);
+        Vec3D(float setPos[3]);
+        Vec3D(float x, float y, float z);
         Vec3D(const Vec3D& v1, const Vec3D& v2);
         Vec3D(const Vec3D* v1, const Vec3D* v2);
 
@@ -59,13 +64,13 @@ class Vec3D {
         void operator+=(const Vec3D& v);
         Vec3D operator-(const Vec3D& v);
         void operator-=(const Vec3D& v);
-        Vec3D operator*(const double s);
-        void operator*=(const double s);
+        Vec3D operator*(const float s);
+        void operator*=(const float s);
 
         static double dotProduct(Vec3D& a, Vec3D& b);
         void crossProduct(Vec3D& v1, Vec3D& v2);
         void normalize();
-        double distance(Vec3D& v);
+        float distance(Vec3D& v);
 
         static Vec3D randomVec();
 };
@@ -78,9 +83,10 @@ class Ray {
         Vec3D rayStart;
         Vec3D rayDir;
         sf::Color color = sf::Color::White;
-        double energy = 1;
-        double distTrav = 1;
+        float energy = 1;
+        float distTrav = 1;
         Ray(Vec3D& start, Vec3D& dir);
+        Ray(float start[3], float dx, float dy, float dz);
         int reflect(Vec3D& interPoint, Triangle& trig);
         int refract(Vec3D& interPoint, Triangle& trig);        //TODO
         sf::Color adjustedColor();

@@ -5,15 +5,15 @@ Vec3D::Vec3D() {
     for (int i = 0; i < 3; i++)
         this->pos[i] = 0.;    
 }
-Vec3D::Vec3D(double setPos) {
+Vec3D::Vec3D(float setPos) {
     for (int i = 0; i < 3; i++)
         this->pos[i] = setPos;
 }
-Vec3D::Vec3D(double setPos[3]) {
+Vec3D::Vec3D(float setPos[3]) {
     for (int i = 0; i < 3; i++)
         this->pos[i] = setPos[i];
 }
-Vec3D::Vec3D(double x, double y, double z) {
+Vec3D::Vec3D(float x, float y, float z) {
     this->x = x;
     this->y = y;
     this->z = z;
@@ -45,11 +45,11 @@ void Vec3D::operator-=(const Vec3D& v) {
     for(int i = 0; i < 3; i++)
         this->pos[i] -= v.pos[i]; 
 }
-Vec3D Vec3D::operator*(const double s) {
+Vec3D Vec3D::operator*(const float s) {
     Vec3D newVec(this->x*s, this->y*s, this->z*s);
     return newVec;
 }
-void Vec3D::operator*=(const double s) {
+void Vec3D::operator*=(const float s) {
     for(int i = 0; i < 3; i++)
         this->pos[i] *= s; 
 }
@@ -67,7 +67,7 @@ void Vec3D::normalize() {
     z *= _dist;
 }
 
-double Vec3D::distance(Vec3D& v) {
+float Vec3D::distance(Vec3D& v) {
     return sqrt((this->x - v.x)*(this->x - v.x) + (this->y - v.y)*(this->y - v.y) + (this->z - v.z)*(this->z - v.z))*MPP;
 }
 
@@ -98,6 +98,11 @@ bool Triangle::rayParallel(Ray& ray) {
 Ray::Ray(Vec3D& start, Vec3D& dir) {
     this->rayStart = Vec3D(start.pos);
     this->rayDir = Vec3D(dir.pos);
+}
+
+Ray::Ray(float start[3], float dx, float dy, float dz) {
+    this->rayStart = Vec3D(start);
+    this->rayDir = Vec3D(dx, dy, dz);
 }
 
 int Ray::reflect(Vec3D& interPoint, Triangle& trig) {
@@ -135,7 +140,7 @@ int Ray::refract(Vec3D& interPoint, Triangle& trig) {
 
 sf::Color Ray::adjustedColor() {
     sf::Color color(this->color);
-    double tmp = this->energy / (this->distTrav * this->distTrav);
+    float tmp = this->energy / (this->distTrav * this->distTrav);
     color.r *= tmp;
     color.g *= tmp;
     color.b *= tmp;

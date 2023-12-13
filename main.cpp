@@ -17,7 +17,6 @@ bool isOpen = false;
 void render(sf::RenderWindow* window);
 
 Vec3D camPos(5000, 2500, 9000);
-Mesh mesh;
 
 
 int main() {
@@ -51,7 +50,7 @@ int main() {
     }
     return 0;
 }
-
+/*
 void render(sf::RenderWindow* window) {
 	sf::RectangleShape pixel;
 	pixel.setSize({ 1., 1. });
@@ -93,4 +92,4 @@ void render(sf::RenderWindow* window) {
         }
         window->display();
     //}
-}
+}*/
